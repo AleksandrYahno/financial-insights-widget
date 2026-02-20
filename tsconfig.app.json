@@ -13,7 +13,8 @@
       "@helpers/*": ["src/helpers/*"],
       "@providers/*": ["src/providers/*"],
       "@components/*": ["src/components/*"],
-      "@pages/*": ["src/pages/*"]
+      "@pages/*": ["src/pages/*"],
+      "@api/*": ["src/api/*"]
     },
 
     /* Bundler mode */
