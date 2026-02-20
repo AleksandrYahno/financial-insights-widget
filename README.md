@@ -1,73 +1,97 @@
-# React + TypeScript + Vite
+# Financial Insights Widget
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Right-rail financial cards widget (React 19, Vite 7, TypeScript). Set up with routing, lazy loading, ErrorBoundary, and unit tests. Ready for assignment implementation (API, cards, premium gating).
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Tech stack
 
-## React Compiler
+- **React 19** + **TypeScript**
+- **Vite 7** (build, dev server)
+- **React Router 7** (routing, lazy routes)
+- **TanStack Query (React Query)** (data fetching, to be wired)
+- **Tailwind CSS 3** (styling)
+- **Vitest** + **React Testing Library** + **happy-dom** (unit tests)
+- **ESLint** (type-aware, strict)
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+---
 
-## Expanding the ESLint configuration
+## Prerequisites
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- **Node.js** 20+ (or 22+) recommended. The project may run on Node 18 with engine warnings.
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+---
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+## Setup and run
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+# Install dependencies
+npm ci
+
+# Development
+npm run dev
+
+# Build
+npm run build
+
+# Preview production build
+npm run preview
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+---
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## Scripts
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+| Script        | Description                          |
+|---------------|--------------------------------------|
+| `npm run dev` | Start dev server (Vite)              |
+| `npm run build` | Type-check + production build      |
+| `npm run preview` | Serve `dist` for local preview    |
+| `npm run lint` | ESLint (fails on warnings)          |
+| `npm run test` | Run unit tests (Vitest)             |
+| `npm run test:watch` | Run tests in watch mode        |
+
+---
+
+## Project structure
+
 ```
+src/
+├── App.tsx                 # Root: provider tree
+├── main.tsx
+├── appRoutes.config.tsx    # React Router + lazy routes
+├── index.css               # Tailwind + base styles
+├── helpers/                # buildProvidersTree, etc.
+├── providers/              # AppMainProvider (router + ErrorBoundary)
+├── components/             # ErrorBoundary, LazyPageBoundary, BackdropLoading
+├── pages/                  # HomePage (lazy)
+└── test/
+    └── setup.ts            # Vitest + Testing Library setup
+```
+
+Path aliases: `@/`, `@helpers/`, `@providers/`, `@components/`, `@pages/`.
+
+---
+
+## CI
+
+GitHub Actions (`.github/workflows/ci.yml`) runs on push/PR to `main` or `master`:
+
+1. Checkout
+2. Node 20, `npm ci`
+3. **Lint** (`npm run lint`)
+4. **Test** (`npm run test`)
+5. **Build** (`npm run build`)
+
+---
+
+## Tests
+
+Unit tests cover:
+
+- `buildProvidersTree` (empty/single/multiple providers)
+- `ErrorBoundary` (renders children; shows fallback when child throws)
+- `ErrorFallback` (message, Reload button, `window.location.reload`)
+- `HomePage` (heading, description, `<main>`)
+
+Run: `npm run test`.
