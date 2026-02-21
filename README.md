@@ -1,6 +1,6 @@
 # Financial Insights Widget
 
-Right-rail financial cards widget (React 19, Vite 7, TypeScript). Implements the assignment: Mock API, React Query, card order, premium gating (non-premium sees only Quant Ranking). Steps 4.1–4.3 done; Rail and cards next.
+Right-rail financial cards widget (React 19, Vite 7, TypeScript). Mock API, React Query, three cards (Ratings Summary, Factor Grades, Quant Ranking), premium gating (non-premium sees only Quant Ranking). i18next (English). Rail + slot VMs + dumb cards + skeleton implemented.
 
 ---
 
@@ -11,6 +11,7 @@ Right-rail financial cards widget (React 19, Vite 7, TypeScript). Implements the
 - **React Router 7** (routing, lazy routes)
 - **TanStack Query (React Query)** (data layer; QueryProvider inside AppMainProvider)
 - **Tailwind CSS 3** (styling)
+- **i18next** + **react-i18next** (translations; English only, `src/locales/en.json`)
 - **Vitest** + **React Testing Library** + **happy-dom** (unit tests)
 - **ESLint** (type-aware, strict, max-warnings 0)
 
@@ -42,14 +43,14 @@ npm run preview
 
 ## Scripts
 
-| Script           | Description                     |
-|------------------|---------------------------------|
-| `npm run dev`    | Start dev server (Vite)         |
-| `npm run build`  | Type-check + production build  |
-| `npm run preview`| Serve `dist` for local preview |
-| `npm run lint`   | ESLint (fails on warnings)    |
-| `npm run test`   | Run unit tests (Vitest)       |
-| `npm run test:watch` | Run tests in watch mode  |
+| Script              | Description                     |
+|---------------------|---------------------------------|
+| `npm run dev`       | Start dev server (Vite)         |
+| `npm run build`     | Type-check + production build   |
+| `npm run preview`   | Serve `dist` for local preview   |
+| `npm run lint`      | ESLint (fails on warnings)      |
+| `npm run test`      | Run unit tests (Vitest)         |
+| `npm run test:watch`| Run tests in watch mode         |
 
 ---
 
@@ -57,42 +58,84 @@ npm run preview
 
 ```
 src/
-├── App.tsx                    # Root: provider tree (AppMainProvider only)
-├── main.tsx
+├── App.tsx                    # Root: provider tree (AppMainProvider)
+├── main.tsx                   # Imports i18n, renders App
 ├── appRoutes.config.tsx       # React Router + lazy routes
 ├── index.css                  # Tailwind + base styles
-├── api/                       # Data layer (fetch-based, no Axios)
+├── i18n/
+│   └── i18n.ts                # i18next + react-i18next, en only
+├── locales/
+│   └── en.json                # English translations (cards, rail, error)
+├── api/                       # Data layer (fetch-based)
 │   ├── index.ts               # Re-exports + httpClient singleton
-│   ├── config/               # apiConfig (baseUrl)
+│   ├── config/                # apiConfig (baseUrl)
 │   ├── apiUrls/               # Endpoints: user, ratings-summary, factor-grades/*, quant-ranking
 │   ├── helpers/               # buildFullUrl.helper
-│   ├── httpClient/            # FetchHttpClient, IHttpClient, request/response interfaces
-│   ├── useUser/               # useUser hook + user.interface
-│   ├── useRatingsSummary/     # useRatingsSummary + ratingsSummary.interface
-│   ├── useFactorGradesNow/    # useFactorGradesNow + factorGrades.interface
-│   ├── useFactorGrades3m/     # useFactorGrades3m + factorGrades.interface
-│   ├── useFactorGrades6m/     # useFactorGrades6m + factorGrades.interface
-│   └── useQuantRanking/       # useQuantRanking + quantRanking.interface
-├── helpers/                   # buildProvidersTree, providerBuilder.interface
-├── providers/                 # AppMainProvider (QueryProvider → ErrorBoundary → RouterProvider)
-│   ├── appMainProvider/
-│   └── queryProvider/
-├── components/                 # ErrorBoundary, ErrorFallback, LazyPageBoundary, BackdropLoading
-├── pages/                     # HomePage (lazy)
+│   ├── httpClient/            # FetchHttpClient, request/response interfaces
+│   ├── useUser/               # useUser (premium flag for rail)
+│   ├── useRatingsSummary/     # useRatingsSummary
+│   ├── useFactorGradesNow/    # useFactorGradesNow
+│   ├── useFactorGrades3m/     # useFactorGrades3m
+│   ├── useFactorGrades6m/     # useFactorGrades6m
+│   └── useQuantRanking/       # useQuantRanking
+├── features/
+│   └── financialInsightsRail/
+│       ├── FinancialInsightsRail.tsx   # Rail: useUser, slot order, SLOT_VM_MAP
+│       ├── financialInsightsRail.config.ts  # CARD_SLOT_IDS, isSlotVisible
+│       └── vm/
+│           ├── QuantRankingCardVM/    # useQuantRanking → skeleton or QuantRankingCard
+│           │   └── helpers/            # quantRankingCardVM.helper (mapRankings)
+│           ├── RatingsSummaryCardVM/   # useRatingsSummary → skeleton or RatingsSummaryCard
+│           │   └── helpers/            # ratingsSummaryCardVM.helper (mapToRows, formatSourceKey)
+│           └── FactorGradesCardVM/     # useFactorGradesNow/3m/6m → skeleton or FactorGradesCard
+│               └── helpers/            # factorGradesCardVM.helper (sixMToMap, mergeFactorGrades)
+├── components/
+│   ├── cardSkeleton/          # CardSkeleton (Tailwind pulse)
+│   ├── quantRankingCard/      # Dumb: sector, industry, ranks, footer link
+│   ├── ratingsSummaryCard/    # Dumb: rows (source, rating, score); source keys dynamic, underscore → space
+│   ├── factorGradesCard/      # Dumb: rows (factorKey, now, threeM, sixM); factorKey → t()
+│   ├── errorBoundary/         # ErrorBoundary, ErrorFallback
+│   ├── lazyPageBoundary/
+│   └── backdropLoading/
+├── helpers/                   # buildProvidersTree
+├── providers/                 # AppMainProvider, QueryProvider
+├── pages/
+│   └── homePage/              # HomePage (main + FinancialInsightsRail)
 └── test/
-    └── setup.ts               # Vitest + Testing Library setup
+    └── setup.ts               # jest-dom, i18n init
 ```
 
-Path aliases: `@/`, `@api/`, `@helpers/`, `@providers/`, `@components/`, `@pages/`.
+Path aliases: `@/`, `@api/`, `@api/*`, `@helpers/`, `@providers/`, `@components/`, `@pages/`, `@features/*`, `@locales/*`, `@i18n`.
+
+---
+
+## Architecture (short)
+
+- **Rail** uses `useUser()` → `isPremium`; renders only visible slots (config order). Non-premium: only Quant Ranking slot.
+- **Slot VMs** live in `features/financialInsightsRail/vm/`. Each VM calls hook(s), shows `CardSkeleton` when loading, or the **dumb card** with mapped props. Key/API mapping is in VM helpers (configs for optional API key variants).
+- **Dumb cards** live in `components/` (quantRankingCard, ratingsSummaryCard, factorGradesCard). Props only; no hooks. Only the Quant Ranking footer CTA is a real link; other “link-like” text is styled only.
+- **i18n:** All UI copy in `locales/en.json`; components use `useTranslation()` and `t('key')`.
 
 ---
 
 ## API and data layer
 
 - **Base URL:** `https://seekingalpha.free.beeceptor.com` (see `api/config/apiConfig.ts`).
-- **HTTP client:** `FetchHttpClient` (fetch-based), no Axios. Single instance exported as `httpClient` from `@api`.
-- **Hooks:** `useUser`, `useRatingsSummary`, `useFactorGradesNow`, `useFactorGrades3m`, `useFactorGrades6m`, `useQuantRanking`. Each uses `useQuery`; response types are key-agnostic (`Record<string, T>` where keys come from API).
-- **Implementation status (TECHNICAL_SPECIFICATION §4):** 4.1 QueryClientProvider ✓, 4.2 API base + types ✓, 4.3 React Query hooks ✓. Next: 4.4 Rail container, then skeleton and cards.
+- **HTTP client:** `FetchHttpClient` (fetch-based). Single instance as `httpClient` from `@api`.
+- **Hooks:** `useUser`, `useRatingsSummary`, `useFactorGradesNow` / `useFactorGrades3m` / `useFactorGrades6m`, `useQuantRanking`. Response shapes are key-agnostic where needed; VM helpers map API keys to display (e.g. Rankings: overall/sector/industry; Ratings: dynamic keys, underscore → space; Factor grades: config of factor keys).
+
+---
+
+## Tests
+
+Unit tests (45 total):
+
+- **Rail:** FinancialInsightsRail (testid, premium: one slot vs three slots); HomePage (main, rail, slot).
+- **Cards (dumb):** QuantRankingCard, RatingsSummaryCard, FactorGradesCard — abstract tests (props-driven assertions, no hardcoded copy).
+- **VM helpers:** mapRankings (QuantRanking), mapToRows / formatSourceKey (RatingsSummary), sixMToMap / mergeFactorGrades (FactorGrades).
+- **Other:** CardSkeleton, ErrorBoundary, ErrorFallback, buildProvidersTree, buildFullUrl, FetchHttpClient.
+
+Run: `npm run test`.
 
 ---
 
@@ -105,18 +148,3 @@ GitHub Actions (`.github/workflows/ci.yml`) runs on push/PR to `main` or `master
 3. **Lint** (`npm run lint`)
 4. **Test** (`npm run test`)
 5. **Build** (`npm run build`)
-
----
-
-## Tests
-
-Unit tests (18 total):
-
-- `buildProvidersTree` (empty / single / multiple providers)
-- `ErrorBoundary` (children; fallback when child throws)
-- `ErrorFallback` (message, Reload button)
-- `HomePage` (heading, description, `<main>`)
-- `buildFullUrl.helper` (path, baseUrl, absolute URL passthrough, trim)
-- `FetchHttpClient.get` (URL building, JSON response, signal/headers)
-
-Run: `npm run test`.

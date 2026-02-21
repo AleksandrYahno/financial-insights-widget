@@ -1,0 +1,35 @@
+{
+  "quantRanking": {
+    "title": "Quant Ranking",
+    "sector": "Sector:",
+    "industry": "Industry:",
+    "rankedOverall": "Ranked Overall:",
+    "rankedInSector": "Ranked in Sector:",
+    "rankedInIndustry": "Ranked in Industry:",
+    "outOf": "out of",
+    "cta": "Quant Ratings Beat The Market »"
+  },
+  "ratingsSummary": {
+    "title": "Ratings Summary"
+  },
+  "factorGrades": {
+    "title": "Factor Grades",
+    "now": "Now",
+    "threeM": "3M ago",
+    "sixM": "6M ago",
+    "factors": {
+      "valuation": "Valuation",
+      "growth": "Growth",
+      "profitability": "Profitability",
+      "momentum": "Momentum",
+      "revisions": "Revisions"
+    }
+  },
+  "rail": {
+    "ariaLabel": "Financial insights"
+  },
+  "error": {
+    "somethingWentWrong": "Something went wrong.",
+    "reload": "Reload"
+  }
+}

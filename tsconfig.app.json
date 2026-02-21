@@ -14,8 +14,13 @@
       "@providers/*": ["src/providers/*"],
       "@components/*": ["src/components/*"],
       "@pages/*": ["src/pages/*"],
-      "@api/*": ["src/api/*"]
+      "@api": ["src/api/index.ts"],
+      "@api/*": ["src/api/*"],
+      "@features/*": ["src/features/*"],
+      "@locales/*": ["src/locales/*"],
+      "@i18n": ["src/i18n/i18n.ts"]
     },
+    "resolveJsonModule": true,
 
     /* Bundler mode */
     "moduleResolution": "bundler",

@@ -1,4 +1,5 @@
 import { FC } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import {
   errorFallbackButtonStyle,
@@ -7,6 +8,8 @@ import {
 } from '@components/errorBoundary/errorBoundary.styles';
 
 const ErrorFallback: FC = () => {
+  const { t } = useTranslation();
+
   const handleReload = (): void => {
     window.location.reload();
   };
@@ -14,7 +17,7 @@ const ErrorFallback: FC = () => {
   return (
     <div style={errorFallbackRootStyle}>
       <p style={errorFallbackMessageStyle}>
-        Something went wrong.
+        {t('error.somethingWentWrong')}
       </p>
 
       <button
@@ -22,7 +25,7 @@ const ErrorFallback: FC = () => {
         onClick={handleReload}
         style={errorFallbackButtonStyle}
       >
-        Reload
+        {t('error.reload')}
       </button>
     </div>
   );

@@ -1,11 +1,11 @@
 export { apiConfig } from '@api/config/apiConfig';
-export { IApiConfig } from '@api/config/apiConfig.interface';
+export type { IApiConfig } from '@api/config/apiConfig.interface';
 export { default as apiUrls } from '@api/apiUrls/apiUrls';
-export { IApiEndpoints } from '@api/apiUrls/apiUrls.interface';
+export type { IApiEndpoints } from '@api/apiUrls/apiUrls.interface';
 export { buildFullUrl } from '@api/helpers/buildFullUrl.helper';
 export { FetchHttpClient } from '@api/httpClient/httpClient';
-export { IHttpClient } from '@api/httpClient/interfaces/httpClient.interface';
-export {
+export type { IHttpClient } from '@api/httpClient/interfaces/httpClient.interface';
+export type {
   IGetRequestOptions,
   IPostRequestOptions,
   IPatchRequestOptions,
@@ -14,20 +14,20 @@ export {
   IRequestConfig,
   IRequestOptions,
 } from '@api/httpClient/interfaces/requests.interface';
-export { IApiResponse } from '@api/httpClient/interfaces/responses.interface';
+export type { IApiResponse } from '@api/httpClient/interfaces/responses.interface';
 
 export { useUser } from '@api/useUser/useUser';
-export { IUser } from '@api/useUser/interfaces/user.interface';
+export type { IUser } from '@api/useUser/interfaces/user.interface';
 export { useRatingsSummary } from '@api/useRatingsSummary/useRatingsSummary';
-export { IRatingsSummary, IRatingBlock } from '@api/useRatingsSummary/interfaces/ratingsSummary.interface';
+export type { IRatingsSummary, IRatingBlock } from '@api/useRatingsSummary/interfaces/ratingsSummary.interface';
 export { useFactorGradesNow } from '@api/useFactorGradesNow/useFactorGradesNow';
-export { IFactorGradesNow, IFactorGradeNowItem } from '@api/useFactorGradesNow/interfaces/factorGrades.interface';
+export type { IFactorGradesNow, IFactorGradeNowItem } from '@api/useFactorGradesNow/interfaces/factorGrades.interface';
 export { useFactorGrades3m } from '@api/useFactorGrades3m/useFactorGrades3m';
-export { IFactorGrades3m } from '@api/useFactorGrades3m/interfaces/factorGrades.interface';
+export type { IFactorGrades3m } from '@api/useFactorGrades3m/interfaces/factorGrades.interface';
 export { useFactorGrades6m } from '@api/useFactorGrades6m/useFactorGrades6m';
-export { IFactorGrades6m } from '@api/useFactorGrades6m/interfaces/factorGrades.interface';
+export type { IFactorGrades6m } from '@api/useFactorGrades6m/interfaces/factorGrades.interface';
 export { useQuantRanking } from '@api/useQuantRanking/useQuantRanking';
-export {
+export type {
   IQuantRanking,
   IQuantRankingRank,
   IQuantRankingRankings,

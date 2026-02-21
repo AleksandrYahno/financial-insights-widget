@@ -1,6 +1,6 @@
 import { useQuery, UseQueryResult } from '@tanstack/react-query';
 
-import { httpClient } from '@api/index';
+import { httpClient } from '@api';
 import apiUrls from '@api/apiUrls/apiUrls';
 import { IFactorGradesNow } from '@api/useFactorGradesNow/interfaces/factorGrades.interface';
 
