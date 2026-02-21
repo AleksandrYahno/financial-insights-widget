@@ -17,6 +17,12 @@ export default defineConfig({
           if (id.includes('node_modules/react-router')) {
             return 'react-router';
           }
+          if (
+            id.includes('node_modules/i18next') ||
+            id.includes('node_modules/react-i18next')
+          ) {
+            return 'i18n';
+          }
         },
       },
     },

@@ -10,7 +10,7 @@ const WARNING = 1;
 const ERROR = 2;
 
 export default tseslint.config(
-  { ignores: ['dist'] },
+  { ignores: ['dist', 'cypress/**', 'cypress.config.ts'] },
   {
     extends: [
       js.configs.recommended,

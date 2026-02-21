@@ -28,6 +28,10 @@
   "rail": {
     "ariaLabel": "Financial insights"
   },
+  "cardSlot": {
+    "loadFailed": "Failed to load.",
+    "retry": "Retry"
+  },
   "error": {
     "somethingWentWrong": "Something went wrong.",
     "reload": "Reload"
