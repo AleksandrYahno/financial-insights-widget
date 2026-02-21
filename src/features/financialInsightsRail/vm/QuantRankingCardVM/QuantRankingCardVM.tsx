@@ -14,7 +14,7 @@ const QuantRankingCardVM: FC = (): ReactElement => {
   }
 
   if (isLoading || !data) {
-    return <CardSkeleton />;
+    return <CardSkeleton variant="quant-ranking" />;
   }
 
   const { rankedOverall, rankedInSector, rankedInIndustry } = mapRankings(

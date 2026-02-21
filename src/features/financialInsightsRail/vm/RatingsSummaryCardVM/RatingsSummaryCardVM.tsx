@@ -14,7 +14,7 @@ const RatingsSummaryCardVM: FC = (): ReactElement => {
   }
 
   if (isLoading || !data) {
-    return <CardSkeleton />;
+    return <CardSkeleton variant="ratings-summary" />;
   }
 
   const rows = mapToRows(data);

@@ -1,11 +1,14 @@
 {
+  "homePage": {
+    "mainContent": "Main content"
+  },
   "quantRanking": {
     "title": "Quant Ranking",
-    "sector": "Sector:",
-    "industry": "Industry:",
-    "rankedOverall": "Ranked Overall:",
-    "rankedInSector": "Ranked in Sector:",
-    "rankedInIndustry": "Ranked in Industry:",
+    "sector": "Sector",
+    "industry": "Industry",
+    "rankedOverall": "Ranked Overall",
+    "rankedInSector": "Ranked in Sector",
+    "rankedInIndustry": "Ranked in Industry",
     "outOf": "out of",
     "cta": "Quant Ratings Beat The Market »"
   },

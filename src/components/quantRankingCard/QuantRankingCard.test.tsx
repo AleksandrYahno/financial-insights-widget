@@ -37,15 +37,12 @@ describe('QuantRankingCard', () => {
 
     expect(screen.getByText(sector)).toBeInTheDocument();
     expect(screen.getByText(industry)).toBeInTheDocument();
-    expect(
-      screen.getByText(new RegExp(`${rankedOverall.rank}.*${rankedOverall.total}`)),
-    ).toBeInTheDocument();
-    expect(
-      screen.getByText(new RegExp(`${rankedInSector.rank}.*${rankedInSector.total}`)),
-    ).toBeInTheDocument();
-    expect(
-      screen.getByText(new RegExp(`${rankedInIndustry.rank}.*${rankedInIndustry.total}`)),
-    ).toBeInTheDocument();
+    expect(screen.getByText(rankedOverall.rank.toString())).toBeInTheDocument();
+    expect(screen.getByText(rankedOverall.total.toString())).toBeInTheDocument();
+    expect(screen.getByText(rankedInSector.rank.toString())).toBeInTheDocument();
+    expect(screen.getByText(rankedInSector.total.toString())).toBeInTheDocument();
+    expect(screen.getByText(rankedInIndustry.rank.toString())).toBeInTheDocument();
+    expect(screen.getByText(rankedInIndustry.total.toString())).toBeInTheDocument();
   });
 
   it('renders exactly one link with href', () => {

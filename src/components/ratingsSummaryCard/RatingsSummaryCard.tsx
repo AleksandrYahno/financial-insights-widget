@@ -8,24 +8,27 @@ const RatingsSummaryCard: FC<IRatingsSummaryCardProps> = (props): ReactElement =
   const { rows } = props;
 
   return (
-    <div data-testid="ratings-summary-card">
-      <h3 className="mb-4 text-lg font-semibold text-gray-800">
+    <div
+      className="bg-white p-4"
+      data-testid="ratings-summary-card"
+    >
+      <h3 className="mb-4 text-lg font-semibold text-[#717171]">
         {t('ratingsSummary.title')}
       </h3>
 
-      <div className="space-y-2">
+      <div className="space-y-2 text-[13px]">
         {rows.map((row) => (
           <div
             key={row.source}
-            className="flex items-center justify-between gap-4"
+            className="grid grid-cols-3 items-center gap-4"
           >
-            <span className="text-blue-600 underline">
+            <span className="text-[#44659f]">
               {row.source}
             </span>
-            <span className="text-gray-800">
+            <span className="text-center text-black">
               {row.rating}
             </span>
-            <span className="text-gray-800">
+            <span className="text-center text-black">
               {row.score.toFixed(2)}
             </span>
           </div>

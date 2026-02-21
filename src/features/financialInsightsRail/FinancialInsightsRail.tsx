@@ -25,7 +25,7 @@ const FinancialInsightsRail: FC = (): ReactElement => {
   return (
     <aside
       aria-label={t('rail.ariaLabel')}
-      className="flex max-w-md flex-col gap-4 rounded-lg bg-gray-100 p-4 shadow-md"
+      className="flex min-h-full max-w-sm flex-1 flex-col gap-4 bg-[#f5f0f0] p-4"
       data-testid="financial-insights-rail"
     >
       {CARD_SLOT_IDS.map((slotId: CardSlotId) => {
@@ -38,7 +38,6 @@ const FinancialInsightsRail: FC = (): ReactElement => {
         return (
           <div
             key={slotId}
-            className="border-t border-gray-200 pt-4 first:border-0 first:pt-0"
             data-testid={`slot-${slotId}`}
           >
             <SlotVM />

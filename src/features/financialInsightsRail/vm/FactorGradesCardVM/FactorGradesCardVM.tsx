@@ -36,7 +36,7 @@ const FactorGradesCardVM: FC = (): ReactElement => {
   }
 
   if (isLoading || !hasData) {
-    return <CardSkeleton />;
+    return <CardSkeleton variant="factor-grades" />;
   }
 
   const sixMMap = sixMToMap(sixMQuery.data);
